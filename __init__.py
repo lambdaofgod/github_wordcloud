@@ -1,0 +1,1 @@
+from github_wordcloud import make_starred_repository_wordcloud
