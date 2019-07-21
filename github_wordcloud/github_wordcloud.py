@@ -1,9 +1,8 @@
 import matplotlib.pyplot as plt
 import requests
 import wordcloud
-from pandas.io.json import json_normalize
 from gensim import summarization
-import click
+from pandas.io.json import json_normalize
 
 
 def make_starred_repository_wordcloud(username, extracted_information, filename=None):
@@ -63,15 +62,3 @@ def show_word_cloud_from_texts(text_column):
     texts = text_column.fillna('').values
     cloud = get_word_cloud(texts)
     show_word_cloud(cloud, {}, '')
-
-
-@click.command()
-@click.option('--username')
-@click.option('--extracted_information', default='topics')
-@click.option('--filename', default=None)
-def main(username, extracted_information, filename):
-    make_starred_repository_wordcloud(username, extracted_information, filename)
-
-
-if __name__ == '__main__':
-    main()
