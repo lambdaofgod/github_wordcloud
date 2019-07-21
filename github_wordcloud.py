@@ -13,7 +13,7 @@ def make_starred_repository_wordcloud(username, extracted_information, filename=
     texts = repo_information_df[extracted_information]
     wc = get_word_cloud(texts)
     if filename is None:
-        show_word_cloud(wc, figure_kwargs={'figsize': (8, 5), 'suptitle': 'starred repositories of ' + str(username)})
+        show_word_cloud(wc, figure_kwargs={'figsize': (8, 5)}, title=str(username) + "'s starred repositories")
     else:
         wc.to_file(filename)
 
@@ -29,7 +29,6 @@ def get_starred_repos_for_user(username):
         i += 1
         tmp_response = requests.get(query.format(username, i), headers={"Accept": "application/vnd.github.mercy-preview+json"})
 
-    print(starred_response)
     if len(starred_response) == 0:
         raise requests.HTTPError('Error occured while fetching, most likely you went over rate limit')
     else:
@@ -52,8 +51,9 @@ def get_word_cloud(texts):
     return wordcloud.WordCloud(max_font_size=40).generate(text)
 
 
-def show_word_cloud(wc, figure_kwargs):
+def show_word_cloud(wc, figure_kwargs, title):
     plt.figure(**figure_kwargs)
+    plt.title(title)
     plt.imshow(wc)
     plt.axis('off')
     plt.show()
@@ -62,7 +62,7 @@ def show_word_cloud(wc, figure_kwargs):
 def show_word_cloud_from_texts(text_column):
     texts = text_column.fillna('').values
     cloud = get_word_cloud(texts)
-    show_word_cloud(cloud)
+    show_word_cloud(cloud, {}, '')
 
 
 @click.command()
