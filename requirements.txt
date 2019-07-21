@@ -1,0 +1,6 @@
+wordcloud
+matplotlib
+pandas
+gensim
+click
+paramiko
